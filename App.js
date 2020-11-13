@@ -1,11 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import {enableScreens} from 'react-native-screens'
 
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 
 import MealsNavigator from "./navigation/MealsNavigation"
+
+enableScreens()
 
 let fonts = {
 	'lato-black': require('./assets/Fonts/Lato-Black.ttf'),
