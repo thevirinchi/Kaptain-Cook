@@ -5,6 +5,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 
+import MealsNavigator from "./navigation/MealsNavigation"
+
 let fonts = {
 	'lato-black': require('./assets/Fonts/Lato-Black.ttf'),
 	'lato-bold': require('./assets/Fonts/Lato-Bold.ttf'),
@@ -29,10 +31,7 @@ export default function App() {
 	return (
 		(dataLoaded
 			?
-				<View style={styles.container}>
-					<Text>Open up App.js to start working on your app!</Text>
-					<StatusBar style="auto" />
-				</View>
+				<MealsNavigator/>
 			:
 				<AppLoading/>
 		)
