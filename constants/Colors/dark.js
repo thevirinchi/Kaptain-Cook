@@ -1,0 +1,18 @@
+export default {
+	primaryLight: "#ffa040",
+	primary: "#ff6f00",
+	primaryDark: "#c43e00",
+	secondaryLight: "#ffff81",
+	secondary: "#ffd54f",
+	secondaryDark: "#c8a415",
+	indicativeSuccess: "#00c853",
+	indicativeInformation: "#0091ea",
+	indicativeWarning: "#ff9100",
+	indicativeError: "#dd2c00",
+	blackLight: "#ffffff",
+	black: "#fafafa",
+	blackDark: "#c7c7c7",
+	whiteLight: "#484848",
+	white: "#212121",
+	whiteDark: "#000000",
+}
