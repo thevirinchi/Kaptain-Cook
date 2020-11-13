@@ -6,13 +6,11 @@ import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 
 let fonts = {
-	'lato-black': require('./assets/fonts/Lato-Black.ttf'),
-	'lato-bold': require('./assets/fonts/Lato-Bold.ttf'),
-	'lato-extra-bold': require('./assets/fonts/Lato-ExtraBold.ttf'),
-	'lato-extra-light': require('./assets/fonts/Lato-ExtraLight.ttf'),
-	'lato-light': require('./assets/fonts/Lato-Light.ttf'),
-	'lato-regular': require('./assets/fonts/Lato-Regular.ttf'),
-	'lato-semi-bold': require('./assets/fonts/Lato-SemiBold.ttf')
+	'lato-black': require('./assets/Fonts/Lato-Black.ttf'),
+	'lato-bold': require('./assets/Fonts/Lato-Bold.ttf'),
+	'lato-light': require('./assets/Fonts/Lato-Light.ttf'),
+	'lato-regular': require('./assets/Fonts/Lato-Regular.ttf'),
+	'lato-semi-bold': require('./assets/Fonts/Lato-Thin.ttf')
 };
 
 export default function App() {
