@@ -2,26 +2,32 @@ import React from 'react'
 import { View, Text, FlatList, StyleSheet, Platform, Dimensions } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
+import CategoryItem from '../components/Grid/CategoryItem'
+
 import Colors from '../constants/Colors/light'
 
 import { Categories } from "../data/data"
 
 const CategoriesScreen = props => {
 
+	const onCategoryPress = (id) => {
+		props.navigation.navigate({
+			routeName: 'CategoryMeals',
+			params: {
+				categoryId: id
+			}
+		})
+	}
+
 	const renderGridItem = (itemData) => {
 		return (
-			<TouchableOpacity
-				onPress={() => props.navigation.navigate({
-					routeName: 'CategoryMeals',
-					params: {
-						categoryId: itemData.item.id
-					}
-				})}
-				style={{ ...styles.gridItem, backgroundColor: itemData.item.bgColor }}>
-				<View>
-					<Text style={{ ...styles.categories_text, color: itemData.item.fgColor }}>{itemData.item.title}</Text>
-				</View>
-			</TouchableOpacity>
+			<CategoryItem
+				onPressHandler={onCategoryPress}
+				id={itemData.item.id}
+				backgroundColor={itemData.item.bgColor}
+				color={itemData.item.fgColor}
+				title={itemData.item.title}
+			/>
 		)
 	}
 
