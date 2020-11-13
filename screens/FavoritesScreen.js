@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, StyleSheet, ColorPropType} from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 
 const FavoritesScreen = props => {
 	return (
@@ -18,4 +18,4 @@ const styles = StyleSheet.create({
 	}
 })
 
-export default FavoritesScreen;Favorites
+export default FavoritesScreen; Favorites

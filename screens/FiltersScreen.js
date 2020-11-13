@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text, StyleSheet, ColorPropType} from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 
 const FiltersScreen = props => {
 	return (
@@ -18,4 +18,4 @@ const styles = StyleSheet.create({
 	}
 })
 
-export default FiltersScreen;Filters
+export default FiltersScreen; Filters
