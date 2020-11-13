@@ -15,6 +15,8 @@ let fonts = {
 
 export default function App() {
 
+	const [dataLoaded, setDataLoaded] = useState(false)
+
 	const loadFonts = async () => {
 		await Font.loadAsync(fonts)
 		setDataLoaded(true)
