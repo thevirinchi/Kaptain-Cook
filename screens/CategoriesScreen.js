@@ -18,9 +18,9 @@ const CategoriesScreen = props => {
 					}
 				})}
 				style={{ ...styles.gridItem, backgroundColor: itemData.item.bgColor }}>
-					<View>
-						<Text style={{ ...styles.categories_text, color: itemData.item.fgColor }}>{itemData.item.title}</Text>
-					</View>
+				<View>
+					<Text style={{ ...styles.categories_text, color: itemData.item.fgColor }}>{itemData.item.title}</Text>
+				</View>
 			</TouchableOpacity>
 		)
 	}
