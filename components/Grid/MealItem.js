@@ -18,9 +18,9 @@ const MealItem = props => {
 			</View>
 			<View style={{width: "100%", height: "12%"}}>
 				<View style={styles.details_container}>
-					<Text style={{ ...styles.categories_text, color: props.color }}>{props.duration}</Text>
-					<Text style={{ ...styles.categories_text, color: props.color }}>{props.complexity}</Text>
-					<Text style={{ ...styles.categories_text, color: props.color }}>{props.affordability}</Text>
+					<Text style={{ ...styles.props_text, color: props.color }}>{props.duration + "min"}</Text>
+					<Text style={{ ...styles.props_text, color: props.color }}>{props.complexity}</Text>
+					<Text style={{ ...styles.props_text, color: props.color }}>{props.affordability}</Text>
 				</View>
 			</View>
 		</TouchableOpacity>
@@ -45,6 +45,11 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		textTransform: "capitalize"
 	},
+	props_text: {
+		fontFamily: 'lato-regular',
+		fontSize: 16,
+		textTransform: "capitalize"
+	},
 	image: {
 		width: "100%",
 		height: "100%",
@@ -57,16 +62,17 @@ const styles = StyleSheet.create({
 	title_container: {
 		width: "100%",
 		backgroundColor: Colors.whiteSemi,
-		alignItems: "center",
-		paddingVertical: 8
+		paddingVertical: 8,
+		paddingHorizontal: 16
 	},
 	details_container: {
 		width: "100%",
 		backgroundColor: Colors.whiteLight,
 		flexDirection: "row",
 		alignItems: "center",
-		justifyContent: "space-around",
-		paddingVertical: 8
+		justifyContent: "space-between",
+		paddingVertical: 8,
+		paddingHorizontal: 16
 	}
 })
 
