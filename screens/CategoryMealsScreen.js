@@ -13,7 +13,8 @@ const CategoryMealsScreen = props => {
 		props.navigation.navigate({
 			routeName: 'MealDetails',
 			params: {
-				mealId: id
+				mealId: id,
+				catId: props.navigation.getParam('categoryId')
 			}
 		})
 	}
