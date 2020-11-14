@@ -1,21 +1,111 @@
-import React from 'react'
-import { View, Button, StyleSheet } from 'react-native'
+import React, { useEffect } from 'react'
+import { View, Button, Image, Text, StyleSheet, FlatList, Dimensions } from 'react-native'
+import {HeaderButtons, Item} from 'react-navigation-header-buttons'
+import RightButton from '../components/Header/RightButton'
+
+import Meal from '../components/Meal/Meal'
+
+import { Categories, MEALS } from '../data/data'
+
+import Colors from "../constants/Colors/light"
+import { ScrollView } from 'react-native-gesture-handler'
+import { color } from 'react-native-reanimated'
 
 const MealDetailsScreen = props => {
+
+	const displayMeal = MEALS.find(meal => meal.id === props.navigation.getParam('mealId'))
+
+	const renderGridItem = (itemData) => {
+		return (
+			<View style={styles.gridItem}>
+				<Text>{itemData.item}</Text>
+			</View>
+		)
+	}
+
 	return (
-		<View style={styles.container}>
-			<Button title="Go back" onPress={() => { props.navigation.popToTop() }} />
-		</View>
+		<ScrollView>
+			<Image source={{uri: displayMeal.imageUrl}} style={styles.image}></Image>
+			<View style={styles.props_container}>
+				<Text style={styles.props_text}>{displayMeal.duration + "min"}</Text>
+				<Text style={styles.props_text}>{displayMeal.complexity}</Text>
+				<Text style={styles.props_text}>{displayMeal.affordability}</Text>
+			</View>
+			<View style={styles.ingridients_container}>
+				<Text style={styles.heading_primary}>Ingridients</Text>
+				<FlatList numColumns={2} data={displayMeal.ingredients} renderItem={renderGridItem} backgroundColor={Colors.whiteLight} width={"100%"} />
+			</View>
+		</ScrollView>
 	)
 }
 
+MealDetailsScreen.navigationOptions = navigationData => {
+	const meal = MEALS.find(meal => meal.id === navigationData.navigation.getParam('mealId'))
+	const cat = Categories.find(cat => cat.id === navigationData.navigation.getParam('catId'))
+	return {
+		headerTitle: meal.title,
+		headerStyle: {
+			backgroundColor: cat.bgColor
+		},
+		headerTintColor: cat.fgColor,
+		headerRight: <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName='ios-star' onPress={()=>{console.log("Press")}}/></HeaderButtons>
+	}
+}
+
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
+	image: {
+		width: "100%",
+		height: Dimensions.get("screen").height/3.5
+	},
+	props_container: {
+		width: "100%",
+		paddingVertical: 16,
+		paddingHorizontal: 24,
+		flexDirection: "row",
+		justifyContent: "space-evenly",
+		alignItems: "center",
+		backgroundColor: Colors.whiteLight,
+		elevation: 4
+	},
+	props_text: {
+		fontSize: 16,
+		fontFamily: 'lato-bold',
+		color: Colors.black,
+		textTransform: "capitalize"
+	},
+	ingridients_container: {
+		marginTop: 16,
+		marginHorizontal: 8,
 		flexDirection: "column",
 		justifyContent: "center",
+		paddingVertical: 24,
+		paddingHorizontal: 16,
+		borderRadius: 8,
+		backgroundColor: Colors.whiteLight,
+		elevation: 4,
 		alignItems: "center"
-	}
+	},
+	heading_primary: {
+		marginBottom: 8,
+		fontSize: 18,
+		fontFamily: 'lato-regular',
+		textTransform: "uppercase"
+	},
+	gridItem: {
+		flex: 1,
+		flexDirection: "column",
+		paddingVertical: 4,
+		paddingHorizontal: 8,
+		marginHorizontal: 8,
+		marginVertical: 8,
+		borderRadius: 4,
+		backgroundColor: Colors.whiteLight,
+		overflow: "hidden",
+		justifyContent:"flex-start",
+		alignItems: "flex-start",
+		borderColor: Colors.black,
+		borderWidth: 0.5
+	},
 })
 
 export default MealDetailsScreen;
