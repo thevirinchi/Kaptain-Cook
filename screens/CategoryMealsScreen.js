@@ -1,14 +1,44 @@
 import React from 'react'
-import { View, Button, StyleSheet } from 'react-native'
+import { View, StyleSheet, FlatList } from 'react-native'
 
-import { Categories } from '../data/data'
+import MealItem from '../components/Grid/MealItem'
+
+import { Categories, MEALS } from '../data/data'
+
+import Colors from "../constants/Colors/light"
 
 const CategoryMealsScreen = props => {
 
+	const onMealPress = (id) => {
+		props.navigation.navigate({
+			routeName: 'MealDetails',
+			params: {
+				mealId: id
+			}
+		})
+	}
+
+	const renderGridItem = (itemData) => {
+		return (
+			<MealItem
+				onPressHandler={onMealPress}
+				id={itemData.item.id}
+				title={itemData.item.title}
+				imageUrl={itemData.item.imageUrl}
+				duration={itemData.item.duration}
+				complexity={itemData.item.complexity}
+				affordability={itemData.item.affordability}
+			/>
+		)
+	}
+
+	const displayMeals = MEALS.filter(
+		meal => meal.categoryIds.indexOf(props.navigation.getParam('categoryId'))>=0
+	)
+
 	return (
 		<View style={styles.container}>
-			<Button title="Go to Meal!" onPress={() => { props.navigation.push("MealDetails") }} />
-			<Button title="Go back" onPress={() => { props.navigation.goBack() }} />
+			<FlatList numColumns={1} data={displayMeals} renderItem={renderGridItem} backgroundColor={Colors.whiteLight} width={"100%"} />
 		</View>
 	)
 }
@@ -27,9 +57,10 @@ CategoryMealsScreen.navigationOptions = navigationData => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		flexDirection: "column",
+		backgroundColor: Colors.white,
 		justifyContent: "center",
-		alignItems: "center"
+		alignItems: "center",
+		width: "100%",
 	}
 })
 

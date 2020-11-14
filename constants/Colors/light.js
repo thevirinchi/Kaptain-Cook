@@ -15,4 +15,5 @@ export default {
 	whiteLight: "#ffffff",
 	white: "#fafafa",
 	whiteDark: "#c7c7c7",
+	whiteSemi: "#fafafacc",
 }
