@@ -1,15 +1,12 @@
-import React, { useEffect } from 'react'
-import { View, Button, Image, Text, StyleSheet, FlatList, Dimensions } from 'react-native'
-import {HeaderButtons, Item} from 'react-navigation-header-buttons'
+import React from 'react'
+import { View, Image, Text, StyleSheet, FlatList, Dimensions } from 'react-native'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import RightButton from '../components/Header/RightButton'
-
-import Meal from '../components/Meal/Meal'
 
 import { Categories, MEALS } from '../data/data'
 
 import Colors from "../constants/Colors/light"
 import { ScrollView } from 'react-native-gesture-handler'
-import { color } from 'react-native-reanimated'
 
 const MealDetailsScreen = props => {
 
@@ -23,9 +20,17 @@ const MealDetailsScreen = props => {
 		)
 	}
 
+	const renderStepItem = (itemData) => {
+		return (
+			<View style={styles.stepItem}>
+				<Text>{itemData.item}</Text>
+			</View>
+		)
+	}
+
 	return (
 		<ScrollView>
-			<Image source={{uri: displayMeal.imageUrl}} style={styles.image}></Image>
+			<Image source={{ uri: displayMeal.imageUrl }} style={styles.image}></Image>
 			<View style={styles.props_container}>
 				<Text style={styles.props_text}>{displayMeal.duration + "min"}</Text>
 				<Text style={styles.props_text}>{displayMeal.complexity}</Text>
@@ -34,6 +39,10 @@ const MealDetailsScreen = props => {
 			<View style={styles.ingridients_container}>
 				<Text style={styles.heading_primary}>Ingridients</Text>
 				<FlatList numColumns={2} data={displayMeal.ingredients} renderItem={renderGridItem} backgroundColor={Colors.whiteLight} width={"100%"} />
+			</View>
+			<View style={styles.steps_container}>
+				<Text style={styles.heading_primary}>Steps</Text>
+				<FlatList numColumns={1} data={displayMeal.steps} renderItem={renderStepItem} backgroundColor={Colors.whiteLight} width={"100%"} />
 			</View>
 		</ScrollView>
 	)
@@ -48,14 +57,14 @@ MealDetailsScreen.navigationOptions = navigationData => {
 			backgroundColor: cat.bgColor
 		},
 		headerTintColor: cat.fgColor,
-		headerRight: <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName='ios-star' onPress={()=>{console.log("Press")}}/></HeaderButtons>
+		headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName='ios-star' onPress={() => { console.log("Press") }} /></HeaderButtons>
 	}
 }
 
 const styles = StyleSheet.create({
 	image: {
 		width: "100%",
-		height: Dimensions.get("screen").height/3.5
+		height: Dimensions.get("screen").height / 3.5
 	},
 	props_container: {
 		width: "100%",
@@ -101,7 +110,34 @@ const styles = StyleSheet.create({
 		borderRadius: 4,
 		backgroundColor: Colors.whiteLight,
 		overflow: "hidden",
-		justifyContent:"flex-start",
+		justifyContent: "flex-start",
+		alignItems: "flex-start",
+		borderColor: Colors.black,
+		borderWidth: 0.5
+	},
+	steps_container: {
+		marginVertical: 16,
+		marginHorizontal: 8,
+		flexDirection: "column",
+		justifyContent: "center",
+		paddingVertical: 24,
+		paddingHorizontal: 16,
+		borderRadius: 8,
+		backgroundColor: Colors.whiteLight,
+		elevation: 4,
+		alignItems: "center"
+	},
+	stepItem: {
+		flex: 1,
+		flexDirection: "column",
+		paddingVertical: 4,
+		paddingHorizontal: 8,
+		marginHorizontal: 8,
+		marginVertical: 8,
+		borderRadius: 4,
+		backgroundColor: Colors.whiteLight,
+		overflow: "hidden",
+		justifyContent: "flex-start",
 		alignItems: "flex-start",
 		borderColor: Colors.black,
 		borderWidth: 0.5
