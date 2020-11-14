@@ -56,10 +56,11 @@ CategoryMealsScreen.navigationOptions = navigationData => {
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: Colors.whiteLight,
+		flex: 1,
+		backgroundColor: Colors.white,
 		justifyContent: "center",
 		alignItems: "center",
-		width: "100%"
+		width: "100%",
 	}
 })
 
