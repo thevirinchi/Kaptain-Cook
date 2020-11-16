@@ -8,7 +8,7 @@ import { Categories, MEALS } from '../data/data'
 import Colors from "../constants/Colors/light"
 
 const CategoryMealsScreen = props => {
-
+	
 	const onMealPress = (id) => {
 		props.navigation.navigate({
 			routeName: 'MealDetails',
