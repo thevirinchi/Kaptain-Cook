@@ -18,4 +18,4 @@ const styles = StyleSheet.create({
 	}
 })
 
-export default FavoritesScreen; Favorites
+export default FavoritesScreen;
