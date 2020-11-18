@@ -63,11 +63,7 @@ MealDetailsScreen.navigationOptions = navigationData => {
 				backgroundColor: cat.bgColor
 			},
 			headerTintColor: cat.fgColor,
-			headerRight: () => {
-				<HeaderButtons HeaderButtonComponent={RightButton}>
-					<Item title="Favorite" iconName='ios-star' onPress={() => { console.log("Press") }} />
-				</HeaderButtons>
-			}
+			headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName='ios-star' onPress={() => { console.log("Press") }} /></HeaderButtons>
 		}
 	}
 	else {
@@ -77,11 +73,7 @@ MealDetailsScreen.navigationOptions = navigationData => {
 				backgroundColor: Colors.secondary
 			},
 			headerTintColor: Colors.black,
-			headerRight: () => {
-				<HeaderButtons HeaderButtonComponent={RightButton}>
-					<Item title="Favorite" iconName='ios-star' onPress={() => { console.log("Press") }} />
-				</HeaderButtons>
-			}
+			headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName='ios-star' onPress={() => { console.log("Press") }} /></HeaderButtons>
 		}
 	}
 }

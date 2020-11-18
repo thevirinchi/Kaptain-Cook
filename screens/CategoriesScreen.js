@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, Text, FlatList, StyleSheet, Platform, Dimensions } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { View, FlatList, StyleSheet, Dimensions, Text } from 'react-native'
+import {HeaderButtons, Item} from 'react-navigation-header-buttons'
 
 import CategoryItem from '../components/Grid/CategoryItem'
+import RightButton from '../components/Header/RightButton'
 
 import Colors from '../constants/Colors/light'
 
@@ -38,12 +39,15 @@ const CategoriesScreen = props => {
 	)
 }
 
-CategoriesScreen.navigationOptions = {
-	headerTitle: 'Meal Categories',
-	headerStyle: {
-		backgroundColor: Colors.primary
-	},
-	headerTintColor: Colors.whiteLight
+CategoriesScreen.navigationOptions = navData => {
+	return {
+		headerTitle: 'Meal Categories',
+		headerStyle: {
+			backgroundColor: Colors.primary
+		},
+		headerTintColor: Colors.whiteLight,
+		headerLeft: ()=> <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Menu" iconName='ios-menu' onPress={()=>{navData.navigation.toggleDrawer()}}/></HeaderButtons>
+	}
 }
 
 const styles = StyleSheet.create({
