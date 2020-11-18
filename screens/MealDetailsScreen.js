@@ -50,14 +50,26 @@ const MealDetailsScreen = props => {
 
 MealDetailsScreen.navigationOptions = navigationData => {
 	const meal = MEALS.find(meal => meal.id === navigationData.navigation.getParam('mealId'))
-	const cat = Categories.find(cat => cat.id === navigationData.navigation.getParam('catId'))
-	return {
-		headerTitle: meal.title,
-		headerStyle: {
-			backgroundColor: cat.bgColor
-		},
-		headerTintColor: cat.fgColor,
-		headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName='ios-star' onPress={() => { console.log("Press") }} /></HeaderButtons>
+	if(navigationData.navigation.getParam('catId')!=="f0"){
+		const cat = Categories.find(cat => cat.id === navigationData.navigation.getParam('catId'))
+		return {
+			headerTitle: meal.title,
+			headerStyle: {
+				backgroundColor: cat.bgColor
+			},
+			headerTintColor: cat.fgColor,
+			headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName='ios-star' onPress={() => { console.log("Press") }} /></HeaderButtons>
+		}
+	}
+	else{
+		return {
+			headerTitle: meal.title,
+			headerStyle: {
+				backgroundColor: Colors.secondary
+			},
+			headerTintColor: Colors.black,
+			headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName='ios-star' onPress={() => { console.log("Press") }} /></HeaderButtons>
+		}
 	}
 }
 
