@@ -20,7 +20,7 @@ const MealDetailsScreen = props => {
 	const renderIngridientItem = (itemData) => {
 		return (
 			<View style={styles.gridItem}>
-				<Body text={itemData.item}/>
+				<Body text={itemData.item} />
 			</View>
 		)
 	}
@@ -28,7 +28,7 @@ const MealDetailsScreen = props => {
 	const renderStepItem = (itemData) => {
 		return (
 			<View style={styles.stepItem}>
-				<Body text={itemData.item}/>
+				<Body text={itemData.item} />
 			</View>
 		)
 	}
@@ -37,16 +37,16 @@ const MealDetailsScreen = props => {
 		<ScrollView>
 			<Image source={{ uri: displayMeal.imageUrl }} style={styles.image}></Image>
 			<View style={styles.props_container}>
-				<Secondary text={displayMeal.duration + "min"}/>
-				<Secondary text={displayMeal.complexity}/>
-				<Secondary text={displayMeal.affordability}/>
+				<Secondary text={displayMeal.duration + "min"} />
+				<Secondary text={displayMeal.complexity} />
+				<Secondary text={displayMeal.affordability} />
 			</View>
 			<View style={styles.ingridients_container}>
-				<Primary text="Ingridients"/>
+				<Primary text="Ingridients" />
 				<FlatList numColumns={2} data={displayMeal.ingredients} renderItem={renderIngridientItem} backgroundColor={Colors.whiteLight} width={"100%"} />
 			</View>
 			<View style={styles.steps_container}>
-				<Primary text="Steps"/>
+				<Primary text="Steps" />
 				<FlatList numColumns={1} data={displayMeal.steps} renderItem={renderStepItem} backgroundColor={Colors.whiteLight} width={"100%"} />
 			</View>
 		</ScrollView>
@@ -55,7 +55,7 @@ const MealDetailsScreen = props => {
 
 MealDetailsScreen.navigationOptions = navigationData => {
 	const meal = MEALS.find(meal => meal.id === navigationData.navigation.getParam('mealId'))
-	if(navigationData.navigation.getParam('catId')!=="f0"){
+	if (navigationData.navigation.getParam('catId') !== "f0") {
 		const cat = Categories.find(cat => cat.id === navigationData.navigation.getParam('catId'))
 		return {
 			headerTitle: meal.title,
@@ -63,17 +63,25 @@ MealDetailsScreen.navigationOptions = navigationData => {
 				backgroundColor: cat.bgColor
 			},
 			headerTintColor: cat.fgColor,
-			headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName='ios-star' onPress={() => { console.log("Press") }} /></HeaderButtons>
+			headerRight: () => {
+				<HeaderButtons HeaderButtonComponent={RightButton}>
+					<Item title="Favorite" iconName='ios-star' onPress={() => { console.log("Press") }} />
+				</HeaderButtons>
+			}
 		}
 	}
-	else{
+	else {
 		return {
 			headerTitle: meal.title,
 			headerStyle: {
 				backgroundColor: Colors.secondary
 			},
 			headerTintColor: Colors.black,
-			headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName='ios-star' onPress={() => { console.log("Press") }} /></HeaderButtons>
+			headerRight: () => {
+				<HeaderButtons HeaderButtonComponent={RightButton}>
+					<Item title="Favorite" iconName='ios-star' onPress={() => { console.log("Press") }} />
+				</HeaderButtons>
+			}
 		}
 	}
 }
