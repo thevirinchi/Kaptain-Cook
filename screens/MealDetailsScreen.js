@@ -1,21 +1,26 @@
 import React from 'react'
 import { View, Image, Text, StyleSheet, FlatList, Dimensions } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import { ScrollView } from 'react-native-gesture-handler'
+
 import RightButton from '../components/Header/RightButton'
 
 import { Categories, MEALS } from '../data/data'
 
 import Colors from "../constants/Colors/light"
-import { ScrollView } from 'react-native-gesture-handler'
+
+import Primary from '../components/Typo/Heading/Primary'
+import Secondary from '../components/Typo/Heading/Secondary'
+import Body from '../components/Typo/Body/Body'
 
 const MealDetailsScreen = props => {
 
 	const displayMeal = MEALS.find(meal => meal.id === props.navigation.getParam('mealId'))
 
-	const renderGridItem = (itemData) => {
+	const renderIngridientItem = (itemData) => {
 		return (
 			<View style={styles.gridItem}>
-				<Text>{itemData.item}</Text>
+				<Body text={itemData.item} />
 			</View>
 		)
 	}
@@ -23,7 +28,7 @@ const MealDetailsScreen = props => {
 	const renderStepItem = (itemData) => {
 		return (
 			<View style={styles.stepItem}>
-				<Text>{itemData.item}</Text>
+				<Body text={itemData.item} />
 			</View>
 		)
 	}
@@ -32,16 +37,16 @@ const MealDetailsScreen = props => {
 		<ScrollView>
 			<Image source={{ uri: displayMeal.imageUrl }} style={styles.image}></Image>
 			<View style={styles.props_container}>
-				<Text style={styles.props_text}>{displayMeal.duration + "min"}</Text>
-				<Text style={styles.props_text}>{displayMeal.complexity}</Text>
-				<Text style={styles.props_text}>{displayMeal.affordability}</Text>
+				<Secondary text={displayMeal.duration + "min"} />
+				<Secondary text={displayMeal.complexity} />
+				<Secondary text={displayMeal.affordability} />
 			</View>
 			<View style={styles.ingridients_container}>
-				<Text style={styles.heading_primary}>Ingridients</Text>
-				<FlatList numColumns={2} data={displayMeal.ingredients} renderItem={renderGridItem} backgroundColor={Colors.whiteLight} width={"100%"} />
+				<Primary text="Ingridients" />
+				<FlatList numColumns={2} data={displayMeal.ingredients} renderItem={renderIngridientItem} backgroundColor={Colors.whiteLight} width={"100%"} />
 			</View>
 			<View style={styles.steps_container}>
-				<Text style={styles.heading_primary}>Steps</Text>
+				<Primary text="Steps" />
 				<FlatList numColumns={1} data={displayMeal.steps} renderItem={renderStepItem} backgroundColor={Colors.whiteLight} width={"100%"} />
 			</View>
 		</ScrollView>
@@ -50,14 +55,34 @@ const MealDetailsScreen = props => {
 
 MealDetailsScreen.navigationOptions = navigationData => {
 	const meal = MEALS.find(meal => meal.id === navigationData.navigation.getParam('mealId'))
-	const cat = Categories.find(cat => cat.id === navigationData.navigation.getParam('catId'))
-	return {
-		headerTitle: meal.title,
-		headerStyle: {
-			backgroundColor: cat.bgColor
-		},
-		headerTintColor: cat.fgColor,
-		headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName='ios-star' onPress={() => { console.log("Press") }} /></HeaderButtons>
+	if (navigationData.navigation.getParam('catId') !== "f0") {
+		const cat = Categories.find(cat => cat.id === navigationData.navigation.getParam('catId'))
+		return {
+			headerTitle: meal.title,
+			headerStyle: {
+				backgroundColor: cat.bgColor
+			},
+			headerTintColor: cat.fgColor,
+			headerRight: () => {
+				<HeaderButtons HeaderButtonComponent={RightButton}>
+					<Item title="Favorite" iconName='ios-star' onPress={() => { console.log("Press") }} />
+				</HeaderButtons>
+			}
+		}
+	}
+	else {
+		return {
+			headerTitle: meal.title,
+			headerStyle: {
+				backgroundColor: Colors.secondary
+			},
+			headerTintColor: Colors.black,
+			headerRight: () => {
+				<HeaderButtons HeaderButtonComponent={RightButton}>
+					<Item title="Favorite" iconName='ios-star' onPress={() => { console.log("Press") }} />
+				</HeaderButtons>
+			}
+		}
 	}
 }
 
@@ -76,12 +101,6 @@ const styles = StyleSheet.create({
 		backgroundColor: Colors.whiteLight,
 		elevation: 4
 	},
-	props_text: {
-		fontSize: 16,
-		fontFamily: 'lato-bold',
-		color: Colors.black,
-		textTransform: "capitalize"
-	},
 	ingridients_container: {
 		marginTop: 16,
 		marginHorizontal: 8,
@@ -93,12 +112,6 @@ const styles = StyleSheet.create({
 		backgroundColor: Colors.whiteLight,
 		elevation: 4,
 		alignItems: "center"
-	},
-	heading_primary: {
-		marginBottom: 8,
-		fontSize: 18,
-		fontFamily: 'lato-regular',
-		textTransform: "uppercase"
 	},
 	gridItem: {
 		flex: 1,

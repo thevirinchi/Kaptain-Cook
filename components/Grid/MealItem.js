@@ -3,6 +3,9 @@ import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ImageBackground }
 
 import Colors from '../../constants/Colors/light'
 
+import Secondary from '../Typo/Heading/Secondary'
+import Tertiary from '../Typo/Heading/Tertiary'
+
 const MealItem = props => {
 
 	return (
@@ -12,15 +15,15 @@ const MealItem = props => {
 			<View style={{width: "100%", height: "88%"}}>
 				<ImageBackground source={{uri: props.imageUrl}} style={styles.image}>
 					<View style={styles.title_container}>
-						<Text style={{ ...styles.categories_text, color: props.color }}>{props.title}</Text>
+						<Secondary text={props.title}/>
 					</View>
 				</ImageBackground>
 			</View>
 			<View style={{width: "100%", height: "12%"}}>
 				<View style={styles.details_container}>
-					<Text style={{ ...styles.props_text, color: props.color }}>{props.duration + "min"}</Text>
-					<Text style={{ ...styles.props_text, color: props.color }}>{props.complexity}</Text>
-					<Text style={{ ...styles.props_text, color: props.color }}>{props.affordability}</Text>
+					<Tertiary text={props.complexity}/>
+					<Tertiary text={props.affordability}/>
+					<Tertiary text={props.duration + "min"}/>
 				</View>
 			</View>
 		</TouchableOpacity>

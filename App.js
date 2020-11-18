@@ -13,6 +13,7 @@ enableScreens()
 let fonts = {
 	'lato-black': require('./assets/Fonts/Lato-Black.ttf'),
 	'lato-bold': require('./assets/Fonts/Lato-Bold.ttf'),
+	'lato-italic': require('./assets/Fonts/Lato-Italic.ttf'),
 	'lato-light': require('./assets/Fonts/Lato-Light.ttf'),
 	'lato-regular': require('./assets/Fonts/Lato-Regular.ttf'),
 	'lato-semi-bold': require('./assets/Fonts/Lato-Thin.ttf')
