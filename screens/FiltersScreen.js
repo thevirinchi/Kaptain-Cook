@@ -7,6 +7,8 @@ import Secondary from '../components/Typo/Heading/Secondary'
 import FilterItem from '../components/Filter/FilterItem'
 
 import Colors from "../constants/Colors/light"
+import { useDispatch } from 'react-redux'
+import { setFilters } from '../state/meals/actions'
 
 const FiltersScreen = props => {
 
@@ -17,6 +19,8 @@ const FiltersScreen = props => {
 	const [isVegan, toggleVegan] = useState(false)
 	const [isVegetarian, toggleVegetarian] = useState(false)
 
+	const dispatch = useDispatch()
+
 	const saveFilters = useCallback(() => {
 		const appliedFilters = {
 			glutenFree: isGlutenFree,
@@ -24,6 +28,7 @@ const FiltersScreen = props => {
 			vegan: isVegan,
 			vegetarian: isVegetarian
 		}
+		dispatch(setFilters(appliedFilters))
 	}, [isGlutenFree, isLactosFree, isVegan, isVegetarian])
 
 	useEffect(() => {
