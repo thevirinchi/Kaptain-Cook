@@ -17,7 +17,7 @@ const FavoritesScreen = props => {
 			params: {
 				mealId: id,
 				catId: "f0",
-				mealTitle: meals.filter(meal => meal.id === id)[0].title
+				mealTitle: favMeals.filter(meal => meal.id === id)[0].title
 			}
 		})
 	}
