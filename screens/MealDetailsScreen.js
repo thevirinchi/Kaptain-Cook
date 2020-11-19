@@ -18,6 +18,7 @@ import { toggleFav } from '../state/meals/actions'
 
 const MealDetailsScreen = props => {
 
+	const currentMealIsFav = useSelector(state=> state.meals.favoriteMeals.some(meal => meal.id === props.navigation.getParam('mealId')))
 	const displayMeal = useSelector(state => state.meals.meals).find(meal => meal.id === props.navigation.getParam('mealId'))
 
 	const dispatch = useDispatch()
@@ -46,6 +47,10 @@ const MealDetailsScreen = props => {
 		)
 	}
 
+	useEffect(()=>{
+		props.navigation.setParams({isFav: currentMealIsFav})
+	}, [currentMealIsFav])
+
 	return (
 		<ScrollView>
 			<Image source={{ uri: displayMeal.imageUrl }} style={styles.image}></Image>
@@ -69,6 +74,7 @@ const MealDetailsScreen = props => {
 MealDetailsScreen.navigationOptions = navigationData => {
 	const mealTitle = navigationData.navigation.getParam('mealTitle')
 	const toggleFavorite = navigationData.navigation.getParam('toggleFav')
+	const isFav = navigationData.navigation.getParam('isFav')
 	if (navigationData.navigation.getParam('catId') !== "f0") {
 		const cat = Categories.find(cat => cat.id === navigationData.navigation.getParam('catId'))
 		return {
@@ -77,7 +83,7 @@ MealDetailsScreen.navigationOptions = navigationData => {
 				backgroundColor: cat.bgColor
 			},
 			headerTintColor: cat.fgColor,
-			headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName='ios-star' onPress={ toggleFavorite } /></HeaderButtons>
+			headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName={isFav? 'ios-star' : 'ios-star-outline'} onPress={ toggleFavorite } /></HeaderButtons>
 		}
 	}
 	else {
@@ -87,7 +93,7 @@ MealDetailsScreen.navigationOptions = navigationData => {
 				backgroundColor: Colors.secondary
 			},
 			headerTintColor: Colors.black,
-			headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName='ios-star' onPress={ toggleFavorite } /></HeaderButtons>
+			headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName={isFav? 'ios-star' : 'ios-star-outline'} onPress={ toggleFavorite } /></HeaderButtons>
 		}
 	}
 }
