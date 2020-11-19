@@ -6,6 +6,7 @@ import MealItem from '../components/Grid/MealItem'
 import { useSelector } from 'react-redux'
 
 import Colors from "../constants/Colors/light"
+import Tertiary from '../components/Typo/Heading/Tertiary'
 
 const FavoritesScreen = props => {
 
@@ -42,7 +43,7 @@ const FavoritesScreen = props => {
 
 	return (
 		<View style={styles.container}>
-			<FlatList numColumns={1} data={favMeals} renderItem={renderGridItem} backgroundColor={Colors.whiteLight} width={"100%"} />
+			{favMeals.length < 1 ? <Tertiary text="Add a recipe to favorites and it will be shown here!"/> : <FlatList numColumns={1} data={favMeals} renderItem={renderGridItem} backgroundColor={Colors.whiteLight} width={"100%"} />}
 		</View>
 	)
 }
