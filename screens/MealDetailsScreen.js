@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { View, Image, Text, StyleSheet, FlatList, Dimensions } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -13,11 +13,22 @@ import Primary from '../components/Typo/Heading/Primary'
 import Secondary from '../components/Typo/Heading/Secondary'
 import Body from '../components/Typo/Body/Body'
 
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleFav } from '../state/meals/actions'
 
 const MealDetailsScreen = props => {
 
 	const displayMeal = useSelector(state => state.meals.meals).find(meal => meal.id === props.navigation.getParam('mealId'))
+
+	const dispatch = useDispatch()
+
+	const toggleFavHandler = useCallback(() => {
+		dispatch(toggleFav(displayMeal.id))
+	}, [dispatch, props.navigation.getParam('mealId')])
+
+	useEffect(()=>{
+		props.navigation.setParams({toggleFav: toggleFavHandler})
+	}, [toggleFavHandler])
 
 	const renderIngridientItem = (itemData) => {
 		return (
@@ -57,7 +68,7 @@ const MealDetailsScreen = props => {
 
 MealDetailsScreen.navigationOptions = navigationData => {
 	const mealTitle = navigationData.navigation.getParam('mealTitle')
-	console.log("Fav", mealTitle)
+	const toggleFavorite = navigationData.navigation.getParam('toggleFav')
 	if (navigationData.navigation.getParam('catId') !== "f0") {
 		const cat = Categories.find(cat => cat.id === navigationData.navigation.getParam('catId'))
 		return {
@@ -66,7 +77,7 @@ MealDetailsScreen.navigationOptions = navigationData => {
 				backgroundColor: cat.bgColor
 			},
 			headerTintColor: cat.fgColor,
-			headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName='ios-star' onPress={() => { console.log("Press") }} /></HeaderButtons>
+			headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName='ios-star' onPress={ toggleFavorite } /></HeaderButtons>
 		}
 	}
 	else {
@@ -76,7 +87,7 @@ MealDetailsScreen.navigationOptions = navigationData => {
 				backgroundColor: Colors.secondary
 			},
 			headerTintColor: Colors.black,
-			headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName='ios-star' onPress={() => { console.log("Press") }} /></HeaderButtons>
+			headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName='ios-star' onPress={ toggleFavorite } /></HeaderButtons>
 		}
 	}
 }
