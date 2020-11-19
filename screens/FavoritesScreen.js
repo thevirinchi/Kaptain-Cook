@@ -3,20 +3,21 @@ import { View, FlatList, StyleSheet } from 'react-native'
 
 import MealItem from '../components/Grid/MealItem'
 
-import { MEALS } from '../data/data'
+import { useSelector } from 'react-redux'
 
 import Colors from "../constants/Colors/light"
 
 const FavoritesScreen = props => {
 
-	const favMeals = MEALS.filter(meal => meal.id === 'm1' || meal.id==='m2')
+	const favMeals = useSelector(state => state.meals.favoriteMeals)
 
 	const onMealPress = (id) => {
 		props.navigation.navigate({
 			routeName: 'MealDetails',
 			params: {
 				mealId: id,
-				catId: "f0"
+				catId: "f0",
+				mealTitle: meals.filter(meal => meal.id === id)[0].title
 			}
 		})
 	}
@@ -35,7 +36,7 @@ const FavoritesScreen = props => {
 		)
 	}
 
-	const displayMeals = MEALS.filter(
+	const displayMeals = favMeals.filter(
 		meal => meal.categoryIds.indexOf(props.navigation.getParam('categoryId')) >= 0
 	)
 

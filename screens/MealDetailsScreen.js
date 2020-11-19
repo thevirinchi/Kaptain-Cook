@@ -5,7 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 
 import RightButton from '../components/Header/RightButton'
 
-import { Categories, MEALS } from '../data/data'
+import { Categories } from '../data/data'
 
 import Colors from "../constants/Colors/light"
 
@@ -13,9 +13,11 @@ import Primary from '../components/Typo/Heading/Primary'
 import Secondary from '../components/Typo/Heading/Secondary'
 import Body from '../components/Typo/Body/Body'
 
+import { useSelector } from 'react-redux'
+
 const MealDetailsScreen = props => {
 
-	const displayMeal = MEALS.find(meal => meal.id === props.navigation.getParam('mealId'))
+	const displayMeal = useSelector(state => state.meals.meals).find(meal => meal.id === props.navigation.getParam('mealId'))
 
 	const renderIngridientItem = (itemData) => {
 		return (
@@ -54,11 +56,12 @@ const MealDetailsScreen = props => {
 }
 
 MealDetailsScreen.navigationOptions = navigationData => {
-	const meal = MEALS.find(meal => meal.id === navigationData.navigation.getParam('mealId'))
+	const mealTitle = navigationData.navigation.getParam('mealTitle')
+	console.log("Fav", mealTitle)
 	if (navigationData.navigation.getParam('catId') !== "f0") {
 		const cat = Categories.find(cat => cat.id === navigationData.navigation.getParam('catId'))
 		return {
-			headerTitle: meal.title,
+			headerTitle: mealTitle,
 			headerStyle: {
 				backgroundColor: cat.bgColor
 			},
@@ -68,7 +71,7 @@ MealDetailsScreen.navigationOptions = navigationData => {
 	}
 	else {
 		return {
-			headerTitle: meal.title,
+			headerTitle: mealTitle,
 			headerStyle: {
 				backgroundColor: Colors.secondary
 			},
