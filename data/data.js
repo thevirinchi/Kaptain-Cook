@@ -2,6 +2,16 @@ import Category from '../models/Category';
 import Meal from '../models/Meal';
 import Colors from '../constants/Colors/light'
 
+export const Filters = [
+	"Lactos Free",
+	"Gluten Free",
+	"Vegan",
+	"Vegetarian",
+	"Affordability",
+	"Complexity",
+	"Cooking Time"
+]
+
 export const Categories = [
 	new Category('c1', 'Italian', '#f5428d', Colors.white),
 	new Category('c2', 'Quick & Easy', '#f54242', Colors.white),
