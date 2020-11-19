@@ -8,6 +8,7 @@ import { Categories, MEALS } from '../data/data'
 import Colors from "../constants/Colors/light"
 
 import { useSelector } from 'react-redux'
+import Tertiary from '../components/Typo/Heading/Tertiary'
 
 const CategoryMealsScreen = props => {
 
@@ -44,7 +45,7 @@ const CategoryMealsScreen = props => {
 
 	return (
 		<View style={styles.container}>
-			<FlatList numColumns={1} data={displayMeals} renderItem={renderGridItem} backgroundColor={Colors.whiteLight} width={"100%"} />
+			{displayMeals.length < 1? <Tertiary text="No recipes found in the current filters!"/> : <FlatList numColumns={1} data={displayMeals} renderItem={renderGridItem} backgroundColor={Colors.whiteLight} width={"100%"} />}
 		</View>
 	)
 }
