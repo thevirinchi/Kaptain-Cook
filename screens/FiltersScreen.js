@@ -1,31 +1,44 @@
-import React from 'react'
-import { View, Text, StyleSheet, Switch } from 'react-native'
+import React, { useState, useEffect, useCallback } from 'react'
+import { View, StyleSheet, Switch } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
 import RightButton from '../components/Header/RightButton'
-import Primary from '../components/Typo/Heading/Primary'
-import Body from '../components/Typo/Body/Body'
-
-import { Filters } from '../data/data'
+import Secondary from '../components/Typo/Heading/Secondary'
+import FilterItem from '../components/Filter/FilterItem'
 
 import Colors from "../constants/Colors/light"
-import { FlatList } from 'react-native-gesture-handler'
 
 const FiltersScreen = props => {
 
-	const renderFilterItem = itemData => {
-		return (
-			<View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingVertical: 4, paddingHorizontal: 4}}>
-				<Body text={itemData.item}/>
-				<Switch/>
-			</View>
-		)
-	}
+	const { navigation } = props
+
+	const [isGlutenFree, toggleGlutenFree] = useState(false)
+	const [isLactosFree, toggleLactosFree] = useState(false)
+	const [isVegan, toggleVegan] = useState(false)
+	const [isVegetarian, toggleVegetarian] = useState(false)
+
+	const saveFilters = useCallback(() => {
+		const appliedFilters = {
+			glutenFree: isGlutenFree,
+			lactosFree: isLactosFree,
+			vegan: isVegan,
+			vegetarian: isVegetarian
+		}
+	}, [isGlutenFree, isLactosFree, isVegan, isVegetarian])
+
+	useEffect(() => {
+		navigation.setParams({ save: saveFilters })
+	}, [saveFilters])
 
 	return (
 		<View style={styles.container}>
-			<Primary text="Available Filters"/>
-			<FlatList numColumns={1} data={Filters} renderItem={renderFilterItem} backgroundColor={Colors.whiteLight} width={"100%"} style={{marginTop: 16}}/>
+			<Secondary text="Available Filters" />
+			<View style={{ flexDirection: "column", marginTop: 16, flex: 1, width: "100%" }}>
+				<FilterItem text="Gluten Free" state={isGlutenFree} onChange={(newValue) => { toggleGlutenFree(newValue) }} />
+				<FilterItem text="Lactos Free" state={isLactosFree} onChange={(newValue) => { toggleLactosFree(newValue) }} />
+				<FilterItem text="Vegan" state={isVegan} onChange={(newValue) => { toggleVegan(newValue) }} />
+				<FilterItem text="Vegetarian" state={isVegetarian} onChange={(newValue) => { toggleVegetarian(newValue) }} />
+			</View>
 		</View>
 	)
 }
@@ -37,7 +50,8 @@ FiltersScreen.navigationOptions = navData => {
 			backgroundColor: Colors.primary
 		},
 		headerTintColor: Colors.whiteLight,
-		headerLeft: ()=> <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Menu" iconName='ios-menu' onPress={()=>{navData.navigation.toggleDrawer()}}/></HeaderButtons>
+		headerLeft: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Menu" iconName='ios-menu' onPress={() => { navData.navigation.toggleDrawer() }} /></HeaderButtons>,
+		headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Save" iconName='ios-save' onPress={navData.navigation.getParam('save')} /></HeaderButtons>,
 	}
 }
 
