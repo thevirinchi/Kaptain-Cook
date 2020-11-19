@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { View, Image, Text, StyleSheet, FlatList, Dimensions } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { ScrollView } from 'react-native-gesture-handler'
 
 import RightButton from '../components/Header/RightButton'
 
-import { Categories, MEALS } from '../data/data'
+import { Categories } from '../data/data'
 
 import Colors from "../constants/Colors/light"
 
@@ -13,9 +13,23 @@ import Primary from '../components/Typo/Heading/Primary'
 import Secondary from '../components/Typo/Heading/Secondary'
 import Body from '../components/Typo/Body/Body'
 
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleFav } from '../state/meals/actions'
+
 const MealDetailsScreen = props => {
 
-	const displayMeal = MEALS.find(meal => meal.id === props.navigation.getParam('mealId'))
+	const currentMealIsFav = useSelector(state=> state.meals.favoriteMeals.some(meal => meal.id === props.navigation.getParam('mealId')))
+	const displayMeal = useSelector(state => state.meals.meals).find(meal => meal.id === props.navigation.getParam('mealId'))
+
+	const dispatch = useDispatch()
+
+	const toggleFavHandler = useCallback(() => {
+		dispatch(toggleFav(displayMeal.id))
+	}, [dispatch, props.navigation.getParam('mealId')])
+
+	useEffect(()=>{
+		props.navigation.setParams({toggleFav: toggleFavHandler})
+	}, [toggleFavHandler])
 
 	const renderIngridientItem = (itemData) => {
 		return (
@@ -32,6 +46,10 @@ const MealDetailsScreen = props => {
 			</View>
 		)
 	}
+
+	useEffect(()=>{
+		props.navigation.setParams({isFav: currentMealIsFav})
+	}, [currentMealIsFav])
 
 	return (
 		<ScrollView>
@@ -54,26 +72,28 @@ const MealDetailsScreen = props => {
 }
 
 MealDetailsScreen.navigationOptions = navigationData => {
-	const meal = MEALS.find(meal => meal.id === navigationData.navigation.getParam('mealId'))
+	const mealTitle = navigationData.navigation.getParam('mealTitle')
+	const toggleFavorite = navigationData.navigation.getParam('toggleFav')
+	const isFav = navigationData.navigation.getParam('isFav')
 	if (navigationData.navigation.getParam('catId') !== "f0") {
 		const cat = Categories.find(cat => cat.id === navigationData.navigation.getParam('catId'))
 		return {
-			headerTitle: meal.title,
+			headerTitle: mealTitle,
 			headerStyle: {
 				backgroundColor: cat.bgColor
 			},
 			headerTintColor: cat.fgColor,
-			headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName='ios-star' onPress={() => { console.log("Press") }} /></HeaderButtons>
+			headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName={isFav? 'ios-star' : 'ios-star-outline'} onPress={ toggleFavorite } /></HeaderButtons>
 		}
 	}
 	else {
 		return {
-			headerTitle: meal.title,
+			headerTitle: mealTitle,
 			headerStyle: {
 				backgroundColor: Colors.secondary
 			},
 			headerTintColor: Colors.black,
-			headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName='ios-star' onPress={() => { console.log("Press") }} /></HeaderButtons>
+			headerRight: () => <HeaderButtons HeaderButtonComponent={RightButton}><Item title="Favorite" iconName={isFav? 'ios-star' : 'ios-star-outline'} onPress={ toggleFavorite } /></HeaderButtons>
 		}
 	}
 }

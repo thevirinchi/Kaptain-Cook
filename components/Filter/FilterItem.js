@@ -10,7 +10,7 @@ const FilterItem = props => {
 	return (
 		<View style={styles.container}>
 			<Body text={props.text} />
-			<Switch value={props.state} onValueChange={newValue => {console.log(newValue); props.onChange(newValue) }} trackColor={{true: Colors.primaryLight, false: Colors.whiteDark}} thumbColor={Platform.OS === 'android' ?  Colors.primary : ""}/>
+			<Switch value={props.state} onValueChange={newValue => { props.onChange(newValue) }} trackColor={{ true: Colors.primaryLight, false: Colors.whiteDark }} thumbColor={Platform.OS === 'android' ? Colors.primary : ""} />
 		</View>
 	)
 }

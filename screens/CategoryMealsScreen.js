@@ -7,14 +7,19 @@ import { Categories, MEALS } from '../data/data'
 
 import Colors from "../constants/Colors/light"
 
+import { useSelector } from 'react-redux'
+
 const CategoryMealsScreen = props => {
-	
+
+	const meals = useSelector(state => state.meals.filteredMeals)
+
 	const onMealPress = (id) => {
 		props.navigation.navigate({
 			routeName: 'MealDetails',
 			params: {
 				mealId: id,
-				catId: props.navigation.getParam('categoryId')
+				catId: props.navigation.getParam('categoryId'),
+				mealTitle: meals.filter(meal => meal.id === id)[0].title
 			}
 		})
 	}
@@ -33,8 +38,8 @@ const CategoryMealsScreen = props => {
 		)
 	}
 
-	const displayMeals = MEALS.filter(
-		meal => meal.categoryIds.indexOf(props.navigation.getParam('categoryId'))>=0
+	const displayMeals = meals.filter(
+		meal => meal.categoryIds.indexOf(props.navigation.getParam('categoryId')) >= 0
 	)
 
 	return (

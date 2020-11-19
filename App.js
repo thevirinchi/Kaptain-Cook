@@ -8,7 +8,18 @@ import { AppLoading } from 'expo';
 
 import MealsNavigator from "./navigation/MealsNavigation"
 
+import { createStore, combineReducers } from 'redux'
+import { Provider } from 'react-redux'
+
+import mealsReducer from './state/meals/reducers'
+
 enableScreens()
+
+const rootReducer = combineReducers({
+	'meals': mealsReducer
+})
+
+const store = createStore(rootReducer)
 
 let fonts = {
 	'lato-black': require('./assets/Fonts/Lato-Black.ttf'),
@@ -35,7 +46,7 @@ export default function App() {
 	return (
 		(dataLoaded
 			?
-			<MealsNavigator />
+			<Provider store={store}><MealsNavigator /></Provider>
 			:
 			<AppLoading />
 		)
